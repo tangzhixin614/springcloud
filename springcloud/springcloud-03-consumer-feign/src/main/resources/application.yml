@@ -1,0 +1,61 @@
+server:
+  port: 8083
+  #全局配置GZIP压缩
+  compression:
+    enabled: true
+    min-response-size: 512
+    mime-types:
+      - application/json
+      - application/xml
+      - text/html
+      - text/xml
+      - text/plain
+#设置应用名称
+spring:
+  application:
+    name: consumer-feign
+#指定注册中心
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+
+feign:
+  compression:
+    # 开启响应 GZIP
+    response:
+      enabled: true
+    request:
+      # 设置支持 GZIP 压缩的 MIME 类型，即请求/响应类型
+      mime-types:
+        - text/xml
+        - application/xml
+        - application/json
+      # 配置启动压缩数据的最小阀值，单位字节。默认为 2048
+      min-request-size: 512
+      # 开启请求 GZIP
+      enabled: true
+#ribbon:
+#  # 请求连接的超时时间，单位毫秒，默认的时间为 1 秒
+#  ConnectTimeout: 1000
+#  # 请求处理的超时时间，单位毫秒，默认的时间为 1 秒
+#  ReadTimeout: 1000
+
+# 设置负载均衡策略。openfeign-service 为设置负载均衡的服务名称
+#application-service:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#hystrix服务降级
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          # 如果enabled设置为false，则请求超时交给ribbon控制,为true,则超时作为容错根据
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000 # 超时时间，默认1000ms
