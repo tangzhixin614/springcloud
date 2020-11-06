@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService {
         return result;
     }
 
-    private String downgradeFallback(){
+    public String downgradeFallback(){
         return "服务降级返回托底数据.................";
     }
 }
